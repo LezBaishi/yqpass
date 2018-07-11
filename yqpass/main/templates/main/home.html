@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+<title>首页</title>
+{% endblock %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<p>首页</p>
+{% else %}
+<p>请先<a href="{% url 'users_login' %}">登录</a>。</p>
+{% endif %}
+{% endblock %}
+
+{% block vuejs %}
+{% endblock %}

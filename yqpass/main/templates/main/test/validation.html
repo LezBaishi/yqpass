@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vue.js表单校验</title>
+    {% load static %}
+    <script src="{% static 'js/vue.js' %}"></script>
+    <script src="{% static 'js/vue-validator.mim.js' %}"></script>
+    <script src="{% static 'js/vue-validator.js' %}"></script>
+</head>
+<body>
+    <h1>登录</h1>
+    <div id="validForm">
+        <form novalidate>
+            <div class="username-field">
+                <label for="username">用户名</label>
+                <input type="text" id="username" v-validate:username="['required']"/>
+            </div>
+            <br>
+            <div class="password-field">
+                <label for="password">密&nbsp码：</label>
+                <input type="password" id="password" v-validate:password="['required']"/>
+            </div>
+            <div class="errors">
+                <p v-if="$validation.username.required">必填</p>
+                <p v-if="$validation.password.required">必填</p>
+            </div>
+            <input type="submit" value="提交" v-if="$validation.valid"/>
+        </form>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el:'#app',
+        });
+    </script>
+</body>
+</html>

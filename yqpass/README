@@ -1,0 +1,32 @@
+这里是测试开发分支dev。
+-------------------------------------------------
+代码运行环境搭建步骤：
+
+1、运行环境需要安装第三方模块如下：
+django1.11.8
+django-users2
+mysqlclient/MySQL-python
+PS.Linux安装MySQL-python命令：
+yum install MySQL-Python
+conda install MySQL-Python(Python版本2.7)
+conda install mysqlclient(Python版本3.6)
+
+2、数据库建立指引：
+mysql -uroot -p
+输入密码后命令如下
+mysql> create database yuanqu default charset=utf8;
+mysql> grant all privileges on yuanqu.* to 'root'@'%';
+mysql> flush privileges;
+退出mysql，接着同步数据
+python manage.py migrate
+最后，创建超级管理员账号
+python manage.py createsuperuser
+
+3、收集静态文件，命令如下：
+python manage.py collectstatic
+把放在app下static中的静态文件全部拷贝到settings.py中设置的STATIC_ROOT文件夹中
+
+4、快速搭建开发运行环境（执行这步就无需步骤1）：
+已经将所需环境保存在配置文件yuanqu_env.yaml，我们可以
+安装anaconda后，运行如下命令快速创建所需环境
+conda env create -n yuanqu -f yuanqu_env.yaml

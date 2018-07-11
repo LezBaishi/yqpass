@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+<title>注册关闭</title>
+{% endblock %}
+
+{% block content %}
+<!-- <h1>{% trans "Sign Up Closed" %}</h1>
+<p>{% trans "We are sorry, but the sign up is currently closed." %}</p> -->
+<h1>注册关闭</h1>
+<p>非常抱歉，注册现在已关闭。</p>
+<input class="btn btn-primary" type="button" value="返回登录" onclick="javascript:window.location.href='{% url 'users_login' %}'"/>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+<title>登出</title>
+{% endblock %}
+
+{% block content %}
+<!-- <p>{% trans "Logged out" %}</p> -->
+<p>已退出</p>
+<input class="btn btn-primary" type="button" value="登录" onclick="javascript:window.location.href='{% url 'users_login' %}'"/>
+{% endblock %}

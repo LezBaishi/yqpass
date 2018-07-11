@@ -1,0 +1,111 @@
+{% extends "main/base.html" %}
+
+{% block title %}<title>个人信息修改</title>{% endblock %}
+
+{% block content %}
+
+<div id="app">
+    <table class="table table-hover form-group">
+        <tbody>
+            <tr>
+                <td>账户（不可改）</td>
+                <td><span v-text="email" class="form-control"></span></td>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td><input type="text" v-model="name" class="form-control" id="textName"></td>
+            </tr>
+            <tr>
+                <td>性别</td>
+                <td>
+                    <select v-model="sex" class="form-control">
+                        <option disabled value="">请选择 
+                        </option>
+                        <option>男</option>
+                        <option>女</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>生日</td>
+                <td><input type="date" v-model="birthday" class="form-control"></td>
+            </tr>            
+            <tr>
+                <td>手机号</td>
+                <td><input v-model="phone" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>公司</td>
+                <td><input v-model="company" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>部门</td>
+                <td><input v-model="department" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>室</td>
+                <td><input v-model="team_belong" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>员工编号</td>
+                <td><input v-model="job_number" class="form-control"></td>
+            </tr>
+        </tbody>        
+    </table>
+    <button @click="submit" class="btn btn-primary pull-right" style="margin-right: 10px" >保存修改</button>
+</div>
+
+{% endblock %}
+
+{% block vuejs %}
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            email: '{{ request.user.email }}',
+            name: '{{ request.user.name }}',
+            sex: '{{ request.user.sex }}',
+            birthday: '{{ request.user.birthday }}',
+            phone: '{{ request.user.phone }}',
+            company: '{{ request.user.company }}',
+            department: '{{ request.user.department }}',
+            team_belong: '{{ request.user.team_belong }}',
+            job_number: '{{request.user.job_number}}',
+        },
+        methods:{
+            submit(){
+                data_to_send = {
+                    name: this.name,
+                    sex: this.sex,
+                    birthday: this.birthday,
+                    phone: this.phone,
+                    company: this.company,
+                    department: this.department,
+                    team_belong: this.team_belong,
+                    job_number: this.job_number,
+                };
+                // console.log(data_to_send);
+                // ajax只能发送字符串，先把data转换成字符串
+                data_to_send = JSON.stringify(data_to_send);
+                console.log(data_to_send);
+
+                // vue发送数据使用jquery的ajax解决方案，标准格式为:$.post(url, data, function(r, err))
+                // url是你发送的地址
+                // data是你发送的数据
+                // function是对返回信息的解读，看发送是否成功
+                $.post("{% url 'accounts_profile' %}",
+                    data_to_send,
+                    function(r, err){
+                        if(err === 'success'){
+                            alert('修改已保存')
+                            // return location.assign("{% url 'index' %}");
+                            return location.assign("{% url 'accounts_change' %}");
+                        }else{
+                            return console.log(err);
+                        }
+                    });
+            },
+        },
+    });
+</script>
+{% endblock %}
