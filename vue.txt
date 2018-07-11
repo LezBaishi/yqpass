@@ -1,0 +1,2 @@
+°²×°vue-router
+1¡¢npm install vue-router --save-dev
