@@ -1,0 +1,7 @@
+"id"	"circuit_num"	"route_no"	"route_where"	"state"	"creator"	"gmt_created"	"modifier"	"gmt_modified"	"is_deleted"	"application_detail_id"	"ofiber_core_id"
+"1"	"F0331"	"first"	"1"	"在用"	"maxuesen"	"2018/9/25 16:15:41"	"maxuesen"	"2018/9/25 16:15:41"	"0"	"32"	"13"
+"2"	"F0331"	"second"	"1"	"在用"	"maxuesen"	"2018/9/25 16:21:34"	"maxuesen"	"2018/9/25 16:21:34"	"0"	"32"	"14"
+"3"	"F4865"	"first"	"1"	"在用"	"maxuesen"	"2018/10/8 12:03:37"	"maxuesen"	"2018/10/8 12:03:37"	"0"	"33"	"30"
+"4"	"F4865"	"second"	"1"	"在用"	"maxuesen"	"2018/10/8 12:04:57"	"maxuesen"	"2018/10/8 12:04:57"	"0"	"33"	"31"
+"5"	"F4865"	"first"	"2"	"在用"	"maxuesen"	"2018/10/8 15:25:42"	"maxuesen"	"2018/10/8 15:25:42"	"0"	"33"	"34"
+"6"	"F4865"	"second"	"2"	"在用"	"maxuesen"	"2018/10/8 15:26:01"	"maxuesen"	"2018/10/8 15:26:01"	"0"	"33"	"35"

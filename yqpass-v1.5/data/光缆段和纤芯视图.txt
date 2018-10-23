@@ -1,0 +1,52 @@
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER  VIEW `resmanage_view_ocablesection` AS SELECT
+os.id,
+(SELECT building FROM resmanage_buildinginfo bi WHERE bi.id = bri_A.building_info_id) building_A,
+bri_A.room room_A,
+os.name_A,
+    (SELECT building FROM resmanage_buildinginfo bi WHERE bi.id = bri_Z.building_info_id) building_Z,
+bri_Z.room room_Z,
+os.name_Z,
+os.ocable_name,
+os.core_num core_num,
+SUM((SELECT COUNT(*) FROM resmanage_routeinfo ri WHERE ri.ofiber_core_id = oc.id)) used_core_num,
+SUM((SELECT COUNT(*) FROM resmanage_routeinfo ri WHERE ri.ofiber_core_id = oc.id))/core_num core_occ,
+core_num - SUM((SELECT COUNT(*) FROM resmanage_routeinfo ri WHERE ri.ofiber_core_id = oc.id)) unused_core_num,
+os.ocable_length ocable_length,
+core_num * ocable_length core_kilo,
+SUM((SELECT COUNT(*) FROM resmanage_routeinfo ri WHERE ri.ofiber_core_id = oc.id)) * ocable_length used_core_kilo,
+SUM((SELECT COUNT(*) FROM resmanage_routeinfo ri WHERE ri.ofiber_core_id = oc.id)) * ocable_length / (core_num * ocable_length) core_usage,
+os.ocable_type,
+os.ocable_level,
+os.ofiber_type,
+os.notes,
+os.is_deleted
+FROM
+resmanage_ocablesection os 
+INNER JOIN resmanage_buildingroominfo bri_A ON bri_A.id = os.bri_A_id
+INNER JOIN resmanage_buildingroominfo bri_Z ON bri_Z.id = os.bri_Z_id 
+INNER JOIN resmanage_ofibercore oc ON oc.ocable_section_id = os.id
+GROUP BY os.id
+ORDER BY os.id
+
+
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER  VIEW `resmanage_view_ofibercore` AS SELECT
+oc.id,
+oc.ocable_section_id,
+oc.core_no,
+oc.ocable_odf_A,
+(SELECT CONCAT(ad.rack_num_A, ad.device_name_A) FROM fielddiy_applicationdetail ad WHERE ad.id = ri.application_detail_id) as switch_dport_A,
+oc.ocable_cor,
+oc.ocable_odf_Z,
+(SELECT CONCAT(ad.rack_num_Z, ad.device_name_Z) FROM fielddiy_applicationdetail ad WHERE ad.id = ri.application_detail_id) switch_dport_Z,
+oc.core_quality,
+ri.circuit_num,
+(SELECT tr.title FROM ticket_ticketrecord tr WHERE tr.id =(SELECT ad.ticket_id FROM fielddiy_applicationdetail ad WHERE ad.id = ri.application_detail_id)) occ_business,
+(SELECT tr.sn FROM ticket_ticketrecord tr WHERE tr.id =(SELECT ad.ticket_id FROM fielddiy_applicationdetail ad WHERE ad.id = ri.application_detail_id)) sn,
+oc.notes,
+oc.is_deleted is_deleted_of_oc,
+(SELECT os.is_deleted FROM resmanage_ocablesection os WHERE os.id = oc.ocable_section_id) is_deleted_of_os
+FROM
+resmanage_ofibercore oc
+LEFT JOIN resmanage_routeinfo ri ON ri.ofiber_core_id = oc.id
+ORDER BY oc.id
